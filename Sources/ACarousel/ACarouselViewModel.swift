@@ -101,7 +101,11 @@ class ACarouselViewModel<Data, ID>: ObservableObject where Data : RandomAccessCo
     /// Ignores listen when App will resign active, and listen again when it become active
     private var isTimerActive = true
     func setTimerActive(_ active: Bool) {
-        isTimerActive = active
+        if case ACarouselAutoScroll.inactive = autoScroll {
+            isTimerActive = false
+        } else {
+            isTimerActive = active
+        }
     }
     
 }
