@@ -41,10 +41,11 @@ public struct ACarousel<Data, ID, Content> : View where Data : RandomAccessColle
     
     private func generateContent(proxy: GeometryProxy) -> some View {
         HStack(spacing: viewModel.spacing) {
-            ForEach(viewModel.data, id: viewModel.dataId) {
-                content($0)
+            ForEach(Array(viewModel.data.enumerated()), id: \.offset) { index, item in
+                content(item)
                     .frame(width: viewModel.itemWidth)
-                    .scaleEffect(x: 1, y: viewModel.itemScaling($0), anchor: .center)
+                    .scaleEffect(x: 1, y: viewModel.itemScaling(item), anchor: .center)
+                    .id(index)
             }
         }
         .frame(width: proxy.size.width, height: proxy.size.height, alignment: .leading)
